@@ -13,7 +13,6 @@ defmodule Tabletop.Actions do
   """
 
   @doc """
-
   Applies a particular action to the `board`. The type of action is determined by the atom
   provided with `arg2`. This will then be mapped to a specific behaviour such as Moving
   or Adding a piece. If the type of action has not been implemented then the board will
