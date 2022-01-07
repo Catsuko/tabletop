@@ -2,6 +2,14 @@
 
 Tabletop is a library for creating board games with Elixir.
 
+## TODO
+
+  * publish as hex package
+  * publish hex docs
+  * create tic-tac-toe game using library
+  * create checkers using library
+  * create chess using library
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed

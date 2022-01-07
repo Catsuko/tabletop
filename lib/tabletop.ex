@@ -1,6 +1,3 @@
-# TODO: Test coverage and documentation for everything! including module docs!
-# TODO: repo
-# TODO: make package\exportable module
 defmodule Tabletop do
   @moduledoc """
   Tabletop contains functions for playing a board game and querying the state of the game.
