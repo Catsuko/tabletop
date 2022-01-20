@@ -46,6 +46,13 @@ defmodule Tabletop.Board do
   end
 
   @doc """
+  Gets the value of the attribute named `attribute_name`. Raises a KeyError if it doesn't exist.
+  """
+  def get(%Tabletop.Board{attributes: attributes}, attribute_name) do
+    Map.fetch!(attributes, attribute_name)
+  end
+
+  @doc """
   Adds the provided `effects` to the `board`. Each effect should be a function that accepts a board
   and then returns a board.
 

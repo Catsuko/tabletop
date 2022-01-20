@@ -22,4 +22,11 @@ defmodule Tabletop.Piece do
   def assign(piece, attributes) do
     %Tabletop.Piece{piece | attributes: Map.merge(piece.attributes, attributes)}
   end
+
+  @doc """
+  Checks if two pieces are the same by comparing ids.
+  """
+  def equal?(%Tabletop.Piece{id: a}, %Tabletop.Piece{id: b}) do
+    a == b
+  end
 end
