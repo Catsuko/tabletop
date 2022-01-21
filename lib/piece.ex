@@ -20,7 +20,7 @@ defmodule Tabletop.Piece do
   share a key will be overridden.
   """
   def assign(piece, attributes) do
-    %Tabletop.Piece{piece | attributes: Map.merge(piece.attributes, attributes)}
+    %Tabletop.Piece{piece | attributes: Enum.into(attributes, piece.attributes)}
   end
 
   @doc """

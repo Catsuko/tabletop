@@ -12,4 +12,17 @@ defmodule BoardTest do
     }
     assert expected_positions == Board.square(2).pieces
   end
+
+  test "assigns attribute" do
+    result = Board.square(3)
+      |> Board.assign(test: 1)
+      |> Board.get(:test)
+    assert result == 1
+  end
+
+  test "assigns multiple attributes" do
+    %Tabletop.Board{attributes: attrs} = Board.square(3)
+      |> Board.assign(winner: 1, loser: 2)
+    assert Map.keys(attrs) == [:loser, :winner]
+  end
 end

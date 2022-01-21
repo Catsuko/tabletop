@@ -42,7 +42,7 @@ defmodule Tabletop.Board do
   a key will be overriden.
   """
   def assign(board, attributes) do
-    %Tabletop.Board{board | attributes: Map.merge(board.attributes, attributes)}
+    %Tabletop.Board{board | attributes: Enum.into(attributes, board.attributes)}
   end
 
   @doc """
