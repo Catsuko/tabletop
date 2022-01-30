@@ -99,4 +99,18 @@ defmodule Tabletop do
     Map.has_key?(pieces, position)
   end
 
+  @doc """
+  Creates a stream that starts at `starting_position` and moves around the `board`.
+  The provided `fun` function is given the previous position and decides
+  the next position.
+
+  The stream will end if the position moves out of bounds.
+  """
+  def travel(board, starting_position, fun) do
+    Stream.unfold(starting_position, fn pos ->
+      if in_bounds?(board, pos), do: {pos, fun.(pos)}, else: nil
+    end)
+      |> Stream.map(fn pos -> {pos, get_piece(board, pos)} end)
+  end
+
 end
