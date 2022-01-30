@@ -29,4 +29,8 @@ defmodule Tabletop.Piece do
   def equal?(%Tabletop.Piece{id: a}, %Tabletop.Piece{id: b}) do
     a == b
   end
+
+  def equal?(_, _) do
+    false
+  end
 end
