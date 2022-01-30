@@ -106,6 +106,7 @@ defmodule Tabletop do
 
   The stream will end if the position moves out of bounds.
   """
+  # TODO: Improve documentation here, check reduce docs for inspiration!
   def travel(board, starting_position, fun) do
     Stream.unfold(starting_position, fn pos ->
       if in_bounds?(board, pos), do: {pos, fun.(pos)}, else: nil
