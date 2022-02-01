@@ -35,7 +35,7 @@ defmodule Tabletop do
       %Tabletop.Board{turn: 2}
 
       iex> Tabletop.Board.square(3)
-      iex>   |> Tabletop.take_turn(add: {%Tabletop.Piece{id: "Rook"}, {0, 0}})
+      iex>   |> Tabletop.take_turn(add: {Tabletop.Piece.new("Rook"), {0, 0}})
       iex>   |> Tabletop.take_turn(move: {{0, 0}, {0, 1}})
       iex>   |> Tabletop.get_piece({0, 1})
       %Tabletop.Piece{id: "Rook"}
@@ -54,12 +54,13 @@ defmodule Tabletop do
 
   ## Examples
 
-      iex> %Tabletop.Board{pieces: %{1 => %Tabletop.Piece{id: "Rook"}}}
-      iex>   |> Tabletop.get_piece(1)
-      %Tabletop.Piece{attributes: %{}, id: "Rook"}
+      iex> Tabletop.Board.square(3)
+      iex>   |> Tabletop.Actions.apply(:add,  {Tabletop.Piece.new("Rook"), {0, 0}})
+      iex>   |> Tabletop.get_piece({0, 0})
+      %Tabletop.Piece{id: "Rook"}
 
       iex> Tabletop.Board.square(3)
-      iex>   |> Tabletop.get_piece({0, 0})
+      iex>   |> Tabletop.get_piece({1, 0})
       nil
 
   """
@@ -72,8 +73,9 @@ defmodule Tabletop do
 
   ## Examples
 
-      iex> board = %Tabletop.Board{pieces: %{1 => %Tabletop.Piece{id: "Rook"}}}
-      iex> Tabletop.occupied?(board, 1)
+      iex> Tabletop.Board.square(3)
+      iex>   |> Tabletop.Actions.apply(:add, {Tabletop.Piece.new("Rook"), {0, 0}})
+      iex>   |> Tabletop.occupied?({0, 0})
       true
 
   """
@@ -100,13 +102,24 @@ defmodule Tabletop do
   end
 
   @doc """
-  Creates a stream that starts at `starting_position` and moves around the `board`.
-  The provided `fun` function is given the previous position and decides
-  the next position.
+  Lazily moves through positions on the board starting from `starting_position`. Each element
+  returned be a Tuple containing the position and piece at that position.
 
-  The stream will end if the position moves out of bounds.
+  Invokes `fun` with the current position in order to determine the next position.
+
+  If the position does not contain a piece, the second element of the returned
+  Tuple will be `nil` instead.
+
+  Once the position is out of bounds, no more elements will be returned.
+
+  ## Examples
+
+    iex> Tabletop.Board.square(3)
+    iex>   |> Tabletop.travel({0, 0}, fn {x, y} -> {x + 1, y + 1} end)
+    iex>   |> Enum.to_list()
+    [{{0, 0}, nil}, {{1, 1}, nil}, {{2, 2}, nil}]
+
   """
-  # TODO: Improve documentation here, check reduce docs for inspiration!
   def travel(board, starting_position, fun) do
     Stream.unfold(starting_position, fn pos ->
       if in_bounds?(board, pos), do: {pos, fun.(pos)}, else: nil

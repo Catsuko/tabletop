@@ -24,6 +24,13 @@ defmodule Tabletop.Piece do
   end
 
   @doc """
+  Creates a new piece with the given `id`.
+  """
+  def new(id) do
+    %Tabletop.Piece{id: id}
+  end
+
+  @doc """
   Checks if two pieces are the same by comparing ids.
   """
   def equal?(%Tabletop.Piece{id: a}, %Tabletop.Piece{id: b}) do
