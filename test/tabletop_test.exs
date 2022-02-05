@@ -59,7 +59,7 @@ defmodule TabletopTest do
   describe "neighbours" do
     test "does not provide pairs that are out of bounds" do
       board = Tabletop.Board.square(3)
-      positions = Tabletop.neighbours(board, {1, 1}, &Grid.cardinal_points/1)
+      positions = Tabletop.neighbours(board, {1, 1}, &Tabletop.Grid.cardinal_points/1)
         |> Enum.flat_map(&Tuple.to_list/1)
       assert Enum.all? positions, fn pos -> Tabletop.in_bounds?(board, pos) end
     end
@@ -67,7 +67,7 @@ defmodule TabletopTest do
     test "middle tile has 4 neighbours" do
       middle = {1, 1}
       middle_pairs_count = Tabletop.Board.square(3)
-        |> Tabletop.neighbours({0, 0}, &Grid.cardinal_points/1)
+        |> Tabletop.neighbours({0, 0}, &Tabletop.Grid.cardinal_points/1)
         |> Enum.count(fn {pos_a, pos_b} ->
           pos_a == middle or pos_b == middle
         end)
@@ -77,7 +77,7 @@ defmodule TabletopTest do
     test "corner tile has 2 neighbours" do
       corner = {2, 2}
       corner_pairs_count = Tabletop.Board.square(3)
-        |> Tabletop.neighbours({1, 1}, &Grid.cardinal_points/1)
+        |> Tabletop.neighbours({1, 1}, &Tabletop.Grid.cardinal_points/1)
         |> Enum.count(fn {pos_a, pos_b} ->
           pos_a == corner or pos_b == corner
         end)

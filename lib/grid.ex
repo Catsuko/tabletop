@@ -1,4 +1,4 @@
-defmodule Grid do
+defmodule Tabletop.Grid do
   @moduledoc """
   This module provides functions specific to traversing a square board
   where positions are represented by 2D coordinate Tuples.

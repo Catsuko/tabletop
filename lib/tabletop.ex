@@ -140,7 +140,7 @@ defmodule Tabletop do
   ## Examples
 
     iex> Tabletop.Board.square(3)
-    iex>   |> Tabletop.neighbours({0, 0}, &Grid.cardinal_points/1)
+    iex>   |> Tabletop.neighbours({0, 0}, &Tabletop.Grid.cardinal_points/1)
     iex>   |> Enum.take(2)
     [{{0, 0}, {1, 0}}, {{0, 0}, {0, 1}}]
 
