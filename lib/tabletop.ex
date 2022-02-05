@@ -114,10 +114,10 @@ defmodule Tabletop do
 
   ## Examples
 
-    iex> Tabletop.Board.square(3)
-    iex>   |> Tabletop.travel({0, 0}, fn {x, y} -> {x + 1, y + 1} end)
-    iex>   |> Enum.to_list()
-    [{{0, 0}, nil}, {{1, 1}, nil}, {{2, 2}, nil}]
+      iex> Tabletop.Board.square(3)
+      iex>   |> Tabletop.travel({0, 0}, fn {x, y} -> {x + 1, y + 1} end)
+      iex>   |> Enum.to_list()
+      [{{0, 0}, nil}, {{1, 1}, nil}, {{2, 2}, nil}]
 
   """
   def travel(board, starting_position, fun) do
@@ -139,10 +139,10 @@ defmodule Tabletop do
 
   ## Examples
 
-    iex> Tabletop.Board.square(3)
-    iex>   |> Tabletop.neighbours({0, 0}, &Tabletop.Grid.cardinal_points/1)
-    iex>   |> Enum.take(2)
-    [{{0, 0}, {1, 0}}, {{0, 0}, {0, 1}}]
+      iex> Tabletop.Board.square(3)
+      iex>   |> Tabletop.neighbours({0, 0}, &Tabletop.Grid.cardinal_points/1)
+      iex>   |> Enum.take(2)
+      [{{0, 0}, {1, 0}}, {{0, 0}, {0, 1}}]
 
   """
   def neighbours(board, starting_position, fun) do
