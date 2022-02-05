@@ -64,7 +64,7 @@ defmodule Tabletop do
       nil
 
   """
-  def get_piece(%Tabletop.Board{pieces: pieces}, position) do
+  def get_piece(%Board{pieces: pieces}, position) do
     Map.get(pieces, position)
   end
 
@@ -97,7 +97,7 @@ defmodule Tabletop do
       false
 
   """
-  def in_bounds?(%Tabletop.Board{pieces: pieces}, position) do
+  def in_bounds?(%Board{pieces: pieces}, position) do
     Map.has_key?(pieces, position)
   end
 
@@ -125,6 +125,38 @@ defmodule Tabletop do
       if in_bounds?(board, pos), do: {pos, fun.(pos)}, else: nil
     end)
       |> Stream.map(fn pos -> {pos, get_piece(board, pos)} end)
+  end
+
+  @doc """
+  Lazily moves through positions on the board starting from `starting_position` and
+  returns sets of neighbouring positions. Each element will be a tuple containing
+  two positions.
+
+  Invokes `fun` with the current position in order to determine the positions of
+  neighbours.
+
+  Once every set of neighbouring positions are covered, no more elements will be returned.
+
+  ## Examples
+
+    iex> Tabletop.Board.square(3)
+    iex>   |> Tabletop.neighbours({0, 0}, &Grid.cardinal_points/1)
+    iex>   |> Enum.take(2)
+    [{{0, 0}, {1, 0}}, {{0, 0}, {0, 1}}]
+
+  """
+  def neighbours(board, starting_position, fun) do
+    Stream.unfold({[starting_position], MapSet.new()}, fn
+      {[head | tail], checked} ->
+        neighbouring_positions = fun.(head)
+          |> Stream.filter(fn pos -> in_bounds?(board, pos) end)
+          |> Enum.reject(fn pos -> MapSet.member?(checked, pos) end)
+        pairs = Stream.map(neighbouring_positions, fn pos -> {head, pos} end)
+        {pairs, {Enum.uniq(neighbouring_positions ++ tail), MapSet.put(checked, head)}}
+      _ ->
+        nil
+    end)
+      |> Stream.flat_map(fn item -> item end)
   end
 
 end
