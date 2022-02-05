@@ -21,7 +21,7 @@ $ mix deps.get
 
 ## Documentation
 
-Documentation can be found on [Hex Docs](https://hexdocs.pm/tabletop/0.1.0/api-reference.html#content).
+Documentation can be found on [Hex Docs](https://hexdocs.pm/tabletop/api-reference.html#content).
 
 ## Examples
 
