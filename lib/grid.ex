@@ -13,9 +13,13 @@ defmodule Tabletop.Grid do
   end
 
   @doc """
-  Adds two coordinates together and returns the sum.
+  Adds two positions together and returns the result.
   """
   def add({x1, y1}, {x2, y2}) do
     {x1 + x2, y1 + y2}
+  end
+
+  def add(a, b) do
+    a + b
   end
 end

@@ -102,6 +102,30 @@ defmodule Tabletop do
   end
 
   @doc """
+  Finds the position of the first matching `piece` on the `board`. If no piece is
+  found, `default` is returned.
+
+  ## Examples
+
+      iex> Tabletop.Board.square(3)
+      iex>   |> Tabletop.position_of(Tabletop.Piece.new("Pawn"), :unknown)
+      :unknown
+
+      iex> piece = Tabletop.Piece.new("Pawn")
+      iex> Tabletop.Board.square(3)
+      iex>   |> Tabletop.Actions.apply(:add, {piece, {0, 0}})
+      iex>   |> Tabletop.position_of(piece)
+      {0,0}
+
+  """
+  def position_of(%Tabletop.Board{pieces: pieces}, piece, default \\ nil) do
+    Map.keys(pieces)
+      |> Enum.find(default, fn pos ->
+        Tabletop.Piece.equal?(piece, Map.get(pieces, pos))
+      end)
+  end
+
+  @doc """
   Lazily moves through positions on the board starting from `starting_position`. Each element
   returned be a Tuple containing the position and piece at that position.
 

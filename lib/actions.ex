@@ -12,6 +12,9 @@ defmodule Tabletop.Actions do
   see the `Tabletop.take_turn/2` function.
   """
 
+  import Tabletop.Grid, only: [add: 2]
+  import Kernel, except: [apply: 3]
+
   @doc """
   Applies a particular action to the `board`. The type of action is determined by the atom
   provided with `arg2`. This will then be mapped to a specific behaviour such as Moving
@@ -25,6 +28,12 @@ defmodule Tabletop.Actions do
 
   Moves the piece at the `from` position to the `to` position. Any existing pieces at the
   `to` position will be removed from the board and replaced by the moving piece.
+
+    * `arg2` => `:step`
+    * `arguments` => `{piece_id, direction}`
+
+  Moves the first piece matching `piece_id` from its current position and in the provided
+  `direction`.
 
   In the case that there is no piece to move, nothing will happen and the unchanged
   board struct will be returned.
@@ -96,6 +105,16 @@ defmodule Tabletop.Actions do
         %Tabletop.Board{board | pieces: updated_pieces}
       nil ->
         board
+    end
+  end
+
+  def apply(board, :step, {piece_id, direction}) do
+    case Tabletop.position_of(board, Tabletop.Piece.new(piece_id)) do
+      nil ->
+        board
+      position ->
+        next_position = add(position, direction)
+        apply(board, :move, {position, next_position})
     end
   end
 
