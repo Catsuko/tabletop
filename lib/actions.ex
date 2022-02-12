@@ -114,7 +114,11 @@ defmodule Tabletop.Actions do
         board
       position ->
         next_position = add(position, direction)
-        apply(board, :move, {position, next_position})
+        if Tabletop.in_bounds?(board, next_position) do
+          apply(board, :move, {position, next_position})
+        else
+          board
+        end
     end
   end
 

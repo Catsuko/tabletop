@@ -32,8 +32,9 @@ defmodule Actions.MoveTest do
       piece = Tabletop.Piece.new("Sparrow")
       board = Tabletop.Board.square(3)
         |> Actions.apply(:add, {piece, {0, 0}})
+        |> Actions.apply(:step, {piece.id, {-1, -1}})
 
-      assert Actions.apply(board, :step, {piece.id, {-1, -1}})
+      assert Tabletop.Piece.equal?(piece, Tabletop.get_piece(board, {0, 0}))
     end
 
     test "moves the piece" do
